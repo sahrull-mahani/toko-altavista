@@ -65,8 +65,9 @@ class Barang extends BaseController
         foreach ($id as $ids) {
             $get = $this->barangm->find($ids);
             $data = array(
-                'nama' => '<b>' . $get->nama . '</b>',
+                'nama' => '<b>' . $get->nama_barang . '</b>',
                 'get' => $get,
+                'pemilik'=>$this->ownerm->findAll(),
             );
             $this->data['form_input'][] = view('App\Views\barang\form_input', $data);
         }
@@ -82,14 +83,21 @@ class Barang extends BaseController
                 $nama = $this->request->getPost('id');
                 $data = array();
                 foreach ($nama as $key => $val) {
+                    $kodeBarang = $this->request->getPost('kode_barang')[$key];
+                    if ($this->barangm->where('kode_barang', $kodeBarang)->first()) continue;
                     array_push($data, array(
                         'type' => $this->request->getPost('type')[$key],
                         'id_owner' => $this->request->getPost('id_owner')[$key],
-                        'kode_barang' => $this->request->getPost('kode_barang')[$key],
+                        'kode_barang' => $kodeBarang,
                         'nama_barang' => $this->request->getPost('nama_barang')[$key],
                         'harga' => $this->request->getPost('harga')[$key],
                         'stok' => $this->request->getPost('stok')[$key],
                     ));
+                }
+                if (empty($data)) {
+                    $status['type'] = 'error';
+                    $status['text'] = ['KODE BARANG' => 'Ada kode barang yang sudah terdaftar!!'];
+                    return json_encode($status);
                 }
                 if ($this->barangm->insertBatch($data)) {
                     $status['type'] = 'success';
@@ -104,6 +112,19 @@ class Barang extends BaseController
                 $id = $this->request->getPost('id');
                 $data = array();
                 foreach ($id as $key => $val) {
+                    $get = $this->ownerm->find($val);
+                    $kode_barang = $this->request->getPost('kode_barang')[$key];
+                    if ($get->kode_barang != $kode_barang) {
+                        $validationRules = [
+                            'kode_barang'    => [
+                                'rules'  => "is_unique[barang.kode_barang]",
+                                'errors' => [
+                                    'is_unique' => 'kode barang sudah terdaftar sudah terdaftar.',
+                                ],
+                            ],
+                        ];
+                        $this->ownerm->setValidationRules($validationRules);
+                    }
                     array_push($data, array(
                         'id' => $val,
                         'type' => $this->request->getPost('type')[$key],

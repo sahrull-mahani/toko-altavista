@@ -19,7 +19,7 @@
         <select id="id_owner" name="id_owner[]" class="custom-select">
             <option value="" selected disabled>Pilih Pemilik</option>
             <?php foreach($pemilik as $row) :?>
-                <option value="<?= $row->id ?>"><?= ucwords($row->nama) ?></option>
+                <option value="<?= $row->id ?>" <?= isset($get) ? ($get->id_owner == $row->id ? 'selected' : '') : '' ?>><?= ucwords($row->nama) ?></option>
             <?php endforeach ?>
         </select>
     </div>
