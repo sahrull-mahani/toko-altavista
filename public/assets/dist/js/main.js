@@ -10,6 +10,7 @@ var $table = $('#table')
 var $remove = $('#remove')
 var $edit = $('#edit')
 var $single = $('#single-edit')
+var $classsingle = $('.single-edit')
 var $restore = $('#restore')
 var $publish = $('#publish')
 var $detail = $('#detail')
@@ -136,9 +137,9 @@ function readFile(url) {
     });
     $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
         if ($table.bootstrapTable('getSelections').length > 1) {
-            $single.attr('disabled', true)
+            $classsingle.attr('disabled', true)
         } else {
-            $single.prop('disabled', !$table.bootstrapTable('getSelections').length)
+            $classsingle.prop('disabled', !$table.bootstrapTable('getSelections').length)
         }
         $remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
         $publish.prop('disabled', !$table.bootstrapTable('getSelections').length)
@@ -388,7 +389,7 @@ function readFile(url) {
         e.preventDefault();
         $('#modal_content').modal('hide');
     });
-    $single.bind('click', function (e) {
+    $classsingle.bind('click', function (e) {
         e.stopImmediatePropagation();
         var ids = JSON.stringify($table.bootstrapTable('getSelections'))
         var a = JSON.parse(ids);
