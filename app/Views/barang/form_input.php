@@ -4,12 +4,12 @@
 <div class="form-group row mode2">
     <label for="type" class="col-sm-3 col-form-label">Type</label>
     <div class="col-sm-9 item">
-        <?php $defaults = array(''=>'==Pilih Type==');
-            $options = array(
-				'umum'=>'umum',
-				'kue'=>'kue',
-			);  
-            echo form_dropdown('type[]',$defaults + $options,(isset($get->type)) ? $get->type: '','class="form-control" id="type" required');
+        <?php $defaults = array('' => '==Pilih Type==');
+        $options = array(
+            'umum' => 'umum',
+            'kue' => 'kue',
+        );
+        echo form_dropdown('type[]', $defaults + $options, (isset($get->type)) ? $get->type : '', 'class="form-control" id="type" required');
         ?>
     </div>
 </div>
@@ -18,7 +18,7 @@
     <div class="col-sm-9 item">
         <select id="id_owner" name="id_owner[]" class="custom-select">
             <option value="" selected disabled>Pilih Pemilik</option>
-            <?php foreach($pemilik as $row) :?>
+            <?php foreach ($pemilik as $row) : ?>
                 <option value="<?= $row->id ?>" <?= isset($get) ? ($get->id_owner == $row->id ? 'selected' : '') : '' ?>><?= ucwords($row->nama) ?></option>
             <?php endforeach ?>
         </select>
@@ -39,7 +39,7 @@
 <div class="form-group row mode2">
     <label for="harga" class="col-sm-3 col-form-label">Harga</label>
     <div class="col-sm-9 item">
-        <input type="text" class="form-control" id="harga" name="harga[]" value="<?= (isset($get->harga)) ? $get->harga : ''; ?>" placeholder="Harga" required />
+        <input type="text" class="form-control uang" id="harga" name="harga[]" value="<?= (isset($get->harga)) ? $get->harga : ''; ?>" placeholder="Harga" required />
     </div>
 </div>
 <div class="form-group row mode2">
@@ -49,3 +49,28 @@
     </div>
 </div>
 <input type="hidden" name="id[]" value="<?= (isset($get->id)) ? $get->id : ''; ?>" />
+
+<script>
+    $(function() {
+        $(".uang").keyup(function(e) {
+            $(this).val(formatRupiah($(this).val(), 'Rp. '));
+        });
+    });
+    /* Fungsi formatRupiah */
+    function formatRupiah(angka, prefix) {
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split = number_string.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        // tambahkan titik jika yang di input sudah menjadi angka ribuan
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    }
+</script>

@@ -1,10 +1,16 @@
+$(document).ready(function () {
+    $('#terjual').DataTable();
+})
+
+$('.quantity').on('keyup', function () {
+    let val = $(this).val()
+    let length = val.length
+    if (val <= 0 || length > 2) {
+        $(this).val(1)
+    }
+})
+
 $.fn.fileinputBsVersion = "3.3.7"; // if not set, this will be auto-derived
-// with plugin options
-// $("#single-input").fileinput({
-//     'showUpload': false,
-//     'showCancel': false,
-//     'dropZoneEnabled': false
-// })
 $("#input-id").fileinput({
     'showUpload': false,
     'showRemove': false,

@@ -47,9 +47,9 @@
                 </li>
                 <li class="nav-item">
                     <a href="<?= site_url('/terjual'); ?>" class="nav-link <?= isset($m_terjual) ? $m_terjual : ''; ?>">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-laptop"></i>
                         <p>
-                            Terjual
+                            Kasir
                         </p>
                     </a>
                 </li>

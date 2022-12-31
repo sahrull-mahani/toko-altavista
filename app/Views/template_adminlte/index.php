@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="<?= base_url('assets/plugins/bootstrap-data-table/extensions/fixed-columns/bootstrap-table-fixed-columns.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/plugins/bootstrap-data-table/extensions/resizable/jquery.resizableColumns.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') ?>">
+    <!-- data tables -->
+    <link rel="stylesheet" href="<?= base_url('assets/plugins/data-tables/css/bootstrap.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/plugins/data-tables/css/dataTables.bootstrap4.min.css') ?>">
     <!-- select2 -->
     <link rel="stylesheet" href="<?= base_url('assets/plugins/select2/css/select2.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') ?>">
@@ -94,7 +97,7 @@
                         </form>
                     </div>
                 </li>
-                
+
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
@@ -159,6 +162,9 @@
     <script src="<?= base_url('assets/plugins/bootstrap-data-table/extensions/resizable/bootstrap-table-resizable.min.js') ?>"></script>
     <!-- bs-custom-file-input -->
     <script src="<?= base_url('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js') ?>"></script>
+    <!-- data tables -->
+    <script src="<?= base_url('assets/plugins/data-tables/js/jquery.dataTables.min.js') ?>"></script>
+    <script src="<?= base_url('assets/plugins/data-tables/js/dataTables.bootstrap4.min.js') ?>"></script>
     <!-- select2 -->
     <script src="<?= base_url('assets/plugins/select2/js/select2.full.min.js') ?>"></script>
     <!-- Lobibox -->

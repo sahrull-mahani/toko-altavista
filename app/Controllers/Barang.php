@@ -90,7 +90,7 @@ class Barang extends BaseController
                         'id_owner' => $this->request->getPost('id_owner')[$key],
                         'kode_barang' => $kodeBarang,
                         'nama_barang' => $this->request->getPost('nama_barang')[$key],
-                        'harga' => $this->request->getPost('harga')[$key],
+                        'harga' => (int)filter_var($this->request->getPost('harga')[$key], FILTER_SANITIZE_NUMBER_INT),
                         'stok' => $this->request->getPost('stok')[$key],
                     ));
                 }
@@ -112,7 +112,7 @@ class Barang extends BaseController
                 $id = $this->request->getPost('id');
                 $data = array();
                 foreach ($id as $key => $val) {
-                    $get = $this->ownerm->find($val);
+                    $get = $this->barangm->find($val);
                     $kode_barang = $this->request->getPost('kode_barang')[$key];
                     if ($get->kode_barang != $kode_barang) {
                         $validationRules = [
@@ -123,15 +123,15 @@ class Barang extends BaseController
                                 ],
                             ],
                         ];
-                        $this->ownerm->setValidationRules($validationRules);
+                        $this->barangm->setValidationRules($validationRules);
                     }
                     array_push($data, array(
                         'id' => $val,
                         'type' => $this->request->getPost('type')[$key],
                         'id_owner' => $this->request->getPost('id_owner')[$key],
-                        'kode_barang' => $this->request->getPost('kode_barang')[$key],
+                        'kode_barang' => $kode_barang,
                         'nama_barang' => $this->request->getPost('nama_barang')[$key],
-                        'harga' => $this->request->getPost('harga')[$key],
+                        'harga' => (int)filter_var($this->request->getPost('harga')[$key], FILTER_SANITIZE_NUMBER_INT),
                         'stok' => $this->request->getPost('stok')[$key],
                     ));
                 }

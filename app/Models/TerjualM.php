@@ -17,52 +17,14 @@ class TerjualM extends Model
     protected $deletedField  = 'deleted_at';
 
     protected $validationRules = [
-        'id_barang' => 'required|max_length[]',
-        'jumlah' => 'required|max_length[]',
+        'id_barang' => 'required|max_length[11]',
+        'jumlah' => 'required|max_length[10]',
     ];
 
     protected $validationMessages = [
-        'id_barang' => ['required' => 'tidak boleh kosong', 'max_length' => 'Maximal  Karakter'],
-        'jumlah' => ['required' => 'tidak boleh kosong', 'max_length' => 'Maximal  Karakter'],
+        'id_barang' => ['required' => 'tidak boleh kosong', 'max_length' => 'Maximal 11 Karakter'],
+        'jumlah' => ['required' => 'tidak boleh kosong', 'max_length' => 'Maximal 10 Karakter'],
     ];
-    private function _get_datatables()
-    {
-        $column_search = array('id_barang', 'jumlah');
-        $i = 0;
-        foreach ($column_search as $item) { // loop column 
-            if ($_GET['search']) {
-                if ($i === 0) {
-                    $this->groupStart();
-                    $this->like($item, $_GET['search']);
-                } else {
-                    $this->orLike($item, $_GET['search']);
-                }
-                if (count($column_search) - 1 == $i)
-                    $this->groupEnd();
-            }
-            $i++;
-        }
-        if (isset($_GET['order'])) {
-            $this->orderBy($_GET['sort'], $_GET['order']);
-        } else {
-            $this->orderBy('id', 'asc');
-        }
-    }
-    public function get_datatables()
-    {
-        $this->_get_datatables();
-        $limit = isset($_GET['limit']) ? $_GET['limit'] : 0;
-        $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
-        return $this->findAll($limit, $offset);
-    }
-    public function total()
-    {
-        $this->_get_datatables();
-        if ($this->tempUseSoftDeletes) {
-            $this->where($this->table . '.' . $this->deletedField, null);
-        }
-        return $this->get()->getNumRows();
-    }
 }
 /* End of file TerjualM.php */
 /* Location: ./app/models/TerjualM.php */
